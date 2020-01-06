@@ -135,7 +135,7 @@
 	$ jupyter notebook list
 
 ## Resources
-- [TensorFlow官方網站]()
+- [TensorFlow官方網站](https://www.tensorflow.org/install/docker)
 - [Docker官方網站](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 - [Linux 安裝 nvidia-docker2](https://roy051023.github.io/2019/02/25/Ubuntu-Install-Nvidia-Docker2/)
 - [快速搭建Tensorflow深度學習環境–Nvidia-docker](https://darren1231.pixnet.net/blog/post/349736695)
