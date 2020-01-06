@@ -68,12 +68,12 @@
 	# [1]  出現Runtimes: nvidia runc才是正確!
 	
     # [2]  若出現 Swap limit support的問題!
-	    $ sudo gredit /etc/default/grub
-		# 新增 GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1" 進去
-		$ sudo update-grub
-		# 重開機	
-	    $ sudo reboot
-		$ sudo docker info | grep nvidia
+    $ sudo gredit /etc/default/grub
+	# 新增 GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1" 進去
+	$ sudo update-grub
+	# 重開機	
+    $ sudo reboot
+	$ sudo docker info | grep nvidia
 
 ### Install TensorFlow
 到[dockerhub](https://hub.docker.com/search?type=image)找尋適當的image
@@ -126,13 +126,16 @@
 	# 進入該container的bash方式
 	# [1] 利用<CONTAINER ID>
 	$ docker ps
-	$ docker exec -it <CONTAINER ID> bash
+	$ docker exec -it <CONTAINER ID> /bin/bash
 	# [2] 利用<CONTAINER_NAME>
-	$ docker exec -it <CONTAINER_NAME> bash
+	$ docker exec -it <CONTAINER_NAME> /bin/bash
+	# 進入會在notebooks資料夾(Jupyter notebook預設資料夾)
 
 	# 若忘記jupyter notebook值(密碼)或是不小心登出了
 	# 在bash裡頭輸入，即可找到token
 	$ jupyter notebook list
+	# 退出bash方式
+	$ exit/Ctrl+d
 
 ## Resources
 - [TensorFlow官方網站](https://www.tensorflow.org/install/docker)
