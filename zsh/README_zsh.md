@@ -47,6 +47,7 @@
 	$ source ~/.zshrc
 
 簡化主題提示訊息(去掉用戶名和主機名)
+
 	$ cd .oh-my-zsh/themes
 	$ gedit agnoster.zsh-theme
 	# 將prompt_context註解掉
@@ -62,7 +63,8 @@
 **問題解決**: 圖片或字型出現亂碼現象
 
 	# 點選shell->點右鍵->設定檔->設定檔偏好設定
-	# 選取字型樣式
+    # 找尋Powerline字體
+	# 選取適當的字型樣式
 
 ![](preference_setting.png)
 
