@@ -52,7 +52,7 @@
 	$ gedit agnoster.zsh-theme
 	# 將prompt_context註解掉
 
-![](zsh-theme _setting.png)
+![](zsh-theme_setting.png)
 
 將默認的shell改成Zsh 
 
