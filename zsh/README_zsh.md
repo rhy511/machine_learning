@@ -55,6 +55,7 @@
 ![](zsh-theme _setting.png)
 
 將默認的shell改成Zsh 
+
 	$ chsh -s $(which zsh)
     # 登出再登入查看結果
 
