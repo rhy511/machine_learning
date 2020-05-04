@@ -87,8 +87,7 @@
 	
 	# 運行container
 	# 把docker內的port 8888 與外部實體主機的port 8888接通，port 6006 與外部實體主機的port 6006接通
-	$ nvidia-docker run --name <CONTAINER_NAME>	-it -p 6006:6006 -p 8888:8888 tensorflow/tensorflow:1.12.0-gpu-py3
-
+	$ nvidia-docker run --name **<CONTAINER_NAME>**-it -p 6006:6006 -p 8888:8888 tensorflow/tensorflow:1.12.0-gpu-py3
 
 	# 記下token值
 	# 開啟瀏覽器輸入http://localhost:8888
@@ -96,7 +95,7 @@
 
 將container中的Jupyter notebook資料夾鏈結到實體資料夾位置
 
-	$ nvidia-docker run --name <CONTAINER_NAME>	-it -p 6006:6006 -p 8888:8888 -v  <PATH>:/home tensorflow/tensorflow:1.12.0-gpu-py3
+	$ nvidia-docker run --name **<CONTAINER_NAME>**-it -p 6006:6006 -p 8888:8888 -v  **<PATH>**:/home tensorflow/tensorflow:1.12.0-gpu-py3
 
 
 常用指令
@@ -105,9 +104,9 @@
 	$ docker images
 	
 	# 啟動container
-	$ docker start <CONTAINER_NAME>
+	$ docker start **<CONTAINER_NAME>**
 	# 停止container
-	$ docker stop <CONTAINER_NAME>
+	$ docker stop **<CONTAINER_NAME>**
 
 	# 查看目前執行中的container(ps = process state)
 	$ docker ps
@@ -115,18 +114,18 @@
 	$ docker ps -a
 
 	# 刪除container
-	$ sudo docker rm <CONTAINER_NAME>
+	$ sudo docker rm **<CONTAINER_NAME>**
 	# 執行成功會顯示被刪除的名字，再用 ps -a 查詢會發現之前的容器已經消失!
 
 	# 預設 rm 指令只能刪除停止的容器，如果要強制刪除執行中的容器，就要使用 -f 參數，代表 force 強制
-	$ sudo docker rm -f <CONTAINER_NAME>	
+	$ sudo docker rm -f **<CONTAINER_NAME>**	
 
 	# 進入該container的bash方式
-	# [1] 利用<CONTAINER ID>
+	# [1] 利用**<CONTAINER ID>**
 	$ docker ps
-	$ docker exec -it <CONTAINER ID> /bin/bash
-	# [2] 利用<CONTAINER_NAME>
-	$ docker exec -it <CONTAINER_NAME> /bin/bash
+	$ docker exec -it **<CONTAINER ID>** /bin/bash
+	# [2] 利用**<CONTAINER_NAME>**
+	$ docker exec -it **<CONTAINER_NAME>** /bin/bash
 	# 進入會在notebooks資料夾(Jupyter notebook預設資料夾)
 
 	# 若忘記jupyter notebook值(密碼)或是不小心登出了
@@ -137,12 +136,12 @@
 
 ## Note
 
-[1] ports:
+[1]  ports:
 
 	# "8888:8888"   # For Jupyter
 	# "6006:6006"   # For TensorBoard
 
-[2] 新增另一個container運行Jupyter notebook
+[2]  新增另一個container運行Jupyter notebook
 
 	# 避免port衝突!
 	# 把docker內的port 8888 與外部實體主機的port 8887接通 (-p 8887:8888)
@@ -150,17 +149,17 @@
 	# 開啟瀏覽器輸入http://localhost:8887
 	# 貼上token值即可使用Jupyter notebook
 
-[3] 運行TensorBoard
+[3]  運行TensorBoard
 
 	# 撰寫一個test.py，使用FileWriter
 	# tf.summary.FileWriter('/tmp/tensorflow/tfboard_Test', sess.graph)
 
-	$ docker exec -it <CONTAINER_NAME> /bin/bash
+	$ docker exec -it **<CONTAINER_NAME>** /bin/bash
 	$ python test.py 
 	$ tensorboard --logdir=/tmp/tensorflow/tfboard_Test
 	# 開啟瀏覽器輸入http://localhost:6006
 
-[4] 查看docker儲存位置
+[4]  查看docker儲存位置
 
 	# 預設docker儲存位置: Docker Root Dir: /var/lib/docker
 	$ docker info
@@ -178,6 +177,7 @@
 - [使用Docker來建置Deep Learning環境](https://medium.com/@minyuantseng/%E4%BD%BF%E7%94%A8docker%E4%BE%86%E5%BB%BA%E7%BD%AEdeep-learning%E7%92%B0%E5%A2%83-171d35632840)
 - [NVIDIA Docker v2 安裝](https://ellis-wu.github.io/2018/03/02/nvidia-docker-installation/)
 - [使用docker安装tensorflow](https://www.jianshu.com/p/478750c45e68)
+- [使用 TensorBoard 視覺化呈現 TensorFlow 計算流程教學](https://blog.gtwang.org/programming/tensorboard-tensorflow-visualization-tutorial/)
 - [Docker 常用指令與容器操作教學](https://blog.gtwang.org/linux/docker-commands-and-container-management-tutorial/)
 - [docker鏡像儲存在哪裡](https://blog.csdn.net/qq_30764991/article/details/81873610)
 
