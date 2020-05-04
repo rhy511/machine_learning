@@ -37,12 +37,14 @@
 	$ sudo apt-get update
 	# 下載docker_ce=<VERSION_STRING> 指定docker版本
 	$ sudo apt-get install docker-ce=18.03.1~ce-0~ubuntu
+
 測試是否成功
 
 	# 確認版本
 	$ sudo docker version(docker -v)
 	# 執行image確認是否安裝成功
 	$ sudo docker run hello-world
+
 將使用者加入docker群組 
 
 	$ sudo usermod -aG docker $USER
@@ -56,12 +58,14 @@
 	$ sudo apt-get update
 	$ sudo apt-get install -y nvidia-docker2 
 	$ sudo pkill -SIGHUP dockerd 
+
 測試是否成功
 
 	# 確認版本
 	$ sudo nvidia-docker version
 	# 執行image確認是否安裝成功(下載官方的docker image，並使用nvidia-smi指令驗證在docker container中有抓到gpu資訊)
 	$ sudo docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi 
+
 **問題解決**: 確認nvidia是否有運行!
     
 	$ sudo docker info | grep nvidia
@@ -82,27 +86,21 @@
     $ sudo docker pull tensorflow/tensorflow:1.12.0-gpu-py3
 	
 	# 運行container
-	# 把docker內的port 8888 與外部實體主機的port 8888接通
-	$ nvidia-docker run --name <CONTAINER_NAME>	-it -p 8888:8888 tensorflow/tensorflow:1.12.0-gpu-py3
+	# 把docker內的port 8888 與外部實體主機的port 8888接通，port 6006 與外部實體主機的port 6006接通
+	$ nvidia-docker run --name <CONTAINER_NAME>	-it -p 6006:6006 -p 8888:8888 tensorflow/tensorflow:1.12.0-gpu-py3
+
+
 	# 記下token值
 	# 開啟瀏覽器輸入http://localhost:8888
     # 貼上token值即可使用Jupyter notebook
 
-	
-	# [[補充]]:
-	# [1] ports:
-		- "8888:8888"   # For jupyter
-		- "6006:6006"   # For tensor board
-	# [2] 新增另一個container運行Jupyter notebook
-		# 避免port衝突!
-		# 把docker內的port 8888 與外部實體主機的port 8887接通
-	  		-p 8887:8888
-		# 記下token值
-		# 開啟瀏覽器輸入http://localhost:8887
-		# 貼上token值即可使用Jupyter notebook
+將container中的Jupyter notebook資料夾鏈結到實體資料夾位置
 
-### Useful commands	
-	
+	$ nvidia-docker run --name <CONTAINER_NAME>	-it -p 6006:6006 -p 8888:8888 -v  <PATH>:/home tensorflow/tensorflow:1.12.0-gpu-py3
+
+
+常用指令
+
 	# 查看鏡像目錄
 	$ docker images
 	
@@ -135,7 +133,41 @@
 	# 在bash裡頭輸入，即可找到token
 	$ jupyter notebook list
 	# 退出bash方式
-	$ exit/Ctrl+d
+	$ exit / Ctrl+d
+
+## Note
+
+[1] ports:
+
+	# "8888:8888"   # For Jupyter
+	# "6006:6006"   # For TensorBoard
+
+[2] 新增另一個container運行Jupyter notebook
+
+	# 避免port衝突!
+	# 把docker內的port 8888 與外部實體主機的port 8887接通 (-p 8887:8888)
+	# 記下token值
+	# 開啟瀏覽器輸入http://localhost:8887
+	# 貼上token值即可使用Jupyter notebook
+
+[3] 運行TensorBoard
+
+	# 撰寫一個test.py，使用FileWriter
+	# tf.summary.FileWriter('/tmp/tensorflow/tfboard_Test', sess.graph)
+
+	$ docker exec -it <CONTAINER_NAME> /bin/bash
+	$ python test.py 
+	$ tensorboard --logdir=/tmp/tensorflow/tfboard_Test
+	# 開啟瀏覽器輸入http://localhost:6006
+
+[4] 查看docker儲存位置
+
+	# 預設docker儲存位置: Docker Root Dir: /var/lib/docker
+	$ docker info
+	
+	# 查看container儲存位置
+    $ sudo ls -l var/lib/docker/containers 
+	
 
 ## Resources
 - [TensorFlow官方網站](https://www.tensorflow.org/install/docker)
@@ -146,3 +178,6 @@
 - [使用Docker來建置Deep Learning環境](https://medium.com/@minyuantseng/%E4%BD%BF%E7%94%A8docker%E4%BE%86%E5%BB%BA%E7%BD%AEdeep-learning%E7%92%B0%E5%A2%83-171d35632840)
 - [NVIDIA Docker v2 安裝](https://ellis-wu.github.io/2018/03/02/nvidia-docker-installation/)
 - [使用docker安装tensorflow](https://www.jianshu.com/p/478750c45e68)
+- [Docker 常用指令與容器操作教學](https://blog.gtwang.org/linux/docker-commands-and-container-management-tutorial/)
+- [docker鏡像儲存在哪裡](https://blog.csdn.net/qq_30764991/article/details/81873610)
+
