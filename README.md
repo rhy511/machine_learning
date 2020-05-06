@@ -165,7 +165,7 @@
 	$ docker info
 	
 	# 查看container儲存位置
-    $ sudo ls -l var/lib/docker/containers 
+    $ sudo ls -l /var/lib/docker/containers 
 	
 
 ## Resources
